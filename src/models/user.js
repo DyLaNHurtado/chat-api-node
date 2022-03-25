@@ -28,6 +28,8 @@ const UserSchema= Schema({
         type:String,
         require:false
     },
+    contacts: [{type: Schema.Types.ObjectId, ref:"User"}],
+    chats:[{type: Schema.Types.ObjectId, ref:"Chat"}]
 },{
     versionKey:false,
     timestamps:true
