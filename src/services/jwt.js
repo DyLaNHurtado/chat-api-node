@@ -1,5 +1,5 @@
 const jwt = require("jsonwebtoken");
-const SECRET_KEY="K3jlkds9KSD099kjsdf8ij32h290kjl";
+const SECRET_KEY=process.env.SECRET_KEY;
 
 function createToken(user,expiresIn){
     const {id,email} =user;

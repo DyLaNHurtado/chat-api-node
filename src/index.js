@@ -1,14 +1,11 @@
+require('dotenv').config()
 const mongoose = require("mongoose");
 const app = require("./app");
 
-const user = "mongoadmin";
-const password = "mongopass";
-const serverUrl = "chatdb.hgs41.mongodb.net";
-const dataBaseName = "chatAngular";
-const URL_MONGODB ="mongodb+srv://"+user+":"+password+"@"+ serverUrl + "/" + dataBaseName + "?retryWrites=true&w=majority";
-const PORT= process.env.PORT || '8888';
+const MONGO_DB_URI = process.env.MONGO_DB_URI;
+const PORT= process.env.PORT;
 
-mongoose.connect(URL_MONGODB,
+mongoose.connect(MONGO_DB_URI,
     {
         useNewUrlParser:true,
         useUnifiedTopology:true,
