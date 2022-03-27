@@ -60,7 +60,7 @@ async function addContact(req,res){
                 if(!user.contacts.includes(newContact[0]._id)){
                     user.contacts= user.contacts.concat(newContact[0]._id);
                     console.log(user.contacts)
-                    //await User.findByIdAndUpdate(idUser,user);
+                    await User.findByIdAndUpdate(idUser,user);
                     const chat= new Chat();
                     chat.members=[idUser,newContact[0]._id];
                     await chat.save();
@@ -130,9 +130,8 @@ function getAvatar(req,res){
             res.sendFile(path.resolve(filePath));
         }
     });
-
-
 }
+
 module.exports = {
     register,
     login,
