@@ -1,5 +1,5 @@
 const moment = require('moment');
-const jwt = require('../service/jwt');
+const jwt = require('../services/jwt');
 
 const SECRET_KEY="K3jlkds9KSD099kjsdf8ij32h290kjl";
 function ensureAuth(req,res,next){

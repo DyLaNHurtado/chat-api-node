@@ -1,15 +1,16 @@
 const fs = require('fs');
 const path = require("path");
-const User = require('../model/User');
+const User = require('../models/user');
+const Chat = require('../models/chat');
 const bcrypt = require('bcrypt');
-const jwt = require('../service/jwt');
+const jwt = require('../services/jwt');
 
 
 async function register(req,res){
     const user = new User();
-    const {email,password} = req.body;
+    const {name,lastname,email,password} = req.body;
     try {
-        if(!email || !password){
+        if(!email || !password || !name || !lastname){
             throw{msg:"Rellene los campos para registrarse"};
         }
             const foundEmail = await User.findOne({email});
@@ -17,6 +18,8 @@ async function register(req,res){
             const salt = bcrypt.genSaltSync(10);
             user.email=email;
             user.password= await bcrypt.hash(password,salt);
+            user.name= name;
+            user.lastname=lastname;
             user.save();
             res.status(200).send(user);
     } catch (error) {
@@ -42,11 +45,36 @@ async function login(req,res){
     }
 }
 
-async function protected(req,res){
-    try {
-        console.log("sfkdf");
-
-    } catch (error) {
+async function addContact(req,res){ 
+    const idUser= req.params.id;
+    const {email}= req.body;
+    try{
+        const user= await User.findById(idUser);
+        if(!user){
+            res.status(404).send({msg:"No se ha podido enlazar el contacto al usuario"});
+        }else{
+            const query = User.find({"email":email});
+            const newContact = await query.exec();
+            console.log(newContact[0]._id );
+            if(newContact !==[]){
+                if(!user.contacts.includes(newContact[0]._id)){
+                    user.contacts= user.contacts.concat(newContact[0]._id);
+                    console.log(user.contacts)
+                    //await User.findByIdAndUpdate(idUser,user);
+                    const chat= new Chat();
+                    chat.members=[idUser,newContact[0]._id];
+                    await chat.save();
+                    res.status(200).send({msg:"Contacto enlazado al usuario!"}); 
+                }else{
+                    res.status(400).send({msg:"Ese contacto ya ha sido enlazado previamente"});
+                }
+                
+            }else{
+                res.status(404).send({msg:"No se ha encontrado el usuario indicado"});
+            }
+           
+        }
+    }catch(error){
         res.status(500).send(error);
     }
 }
@@ -108,7 +136,7 @@ function getAvatar(req,res){
 module.exports = {
     register,
     login,
-    protected,
+    addContact,
     uploadAvatar,
     getAvatar,
 }
