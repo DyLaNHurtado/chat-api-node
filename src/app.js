@@ -8,7 +8,6 @@ app.use(express.urlencoded({extended:true}));
 const user_routes = require('./routes/user');
 const message_routes = require('./routes/message');
 const chat_routes = require('./routes/chat');
-const res = require('express/lib/response');
 const notFound = require('./middlewares/notFound');
 const handleErrors = require('./middlewares/handleErrors');
 

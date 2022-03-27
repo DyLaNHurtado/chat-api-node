@@ -54,7 +54,7 @@ async function getAllByChat(req,next){
         if(!messages){
             res.status(404).send({error:"❌ Cannot get the messages"});
         }else{
-            res.status(200).send({msg:"✅ Successful update !"});
+            res.status(200).send(messages);
         }
     }catch(error){
         next(error);

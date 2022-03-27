@@ -6,12 +6,14 @@
   "scripts": {
     "start": "cross-env NODE_ENV=production node ./src/index.js",
     "dev": "cross-env NODE_ENV=development nodemon ./src/index.js",
-    "test": "cross-env NODE_ENV=test jest --verbose"
+    "test": "cross-env NODE_ENV=test jest --verbose  ",
+    "test:watch": "npm run test -- --watch"
   },
   "author": "DyLaNHurtado",
   "license": "ISC",
   "dependencies": {
     "bcrypt": "^5.0.1",
+    "config": "3.3.1",
     "connect-multiparty": "^2.2.0",
     "cors": "^2.8.5",
     "cross-env": "^7.0.3",
@@ -19,11 +21,12 @@
     "express": "^4.17.3",
     "jsonwebtoken": "^8.5.1",
     "moment": "^2.29.1",
-    "mongoose": "^6.2.7"
+    "mongoose": "^5.13.14"
   },
   "devDependencies": {
     "jest": "^27.5.1",
-    "nodemon": "^2.0.15"
+    "nodemon": "^2.0.15",
+    "supertest": "^6.2.2"
   },
   "eslintConfig": {
     "extends": "./node_modules/standard/eslintrc.json",
@@ -32,6 +35,7 @@
     }
   },
   "jest": {
-    "testEnvironment": "node"
+    "testEnvironment": "node",
+    "testTimeout": 20000
   }
 }
