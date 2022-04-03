@@ -2,12 +2,8 @@ const Chat = require('../models/chat');
 
 async function getAll(req,res,next){
     try{     
-        const chats= await Chat.find();
-        if(!chats){
-            res.status(404).send({error:"❌ Cannot get the chats"});
-        }else{
-            res.status(200).send(chats);
-        }
+        const chats= await Chat.find({});
+        res.status(200).send(chats);
     }catch(error){
         next(error);
     }

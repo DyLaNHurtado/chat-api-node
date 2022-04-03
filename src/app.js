@@ -12,9 +12,9 @@ const notFound = require('./middlewares/notFound');
 const handleErrors = require('./middlewares/handleErrors');
 
 // --- Base Routes ---
-app.use("/api/v1/",user_routes);
-app.use("/api/v1/",message_routes);
-app.use("/api/v1/",chat_routes);
+app.use(process.env.API_MAINENDPOINT,user_routes);
+app.use(process.env.API_MAINENDPOINT,message_routes);
+app.use(process.env.API_MAINENDPOINT,chat_routes);
 // Middlewares
 app.use(notFound);
 app.use(handleErrors)

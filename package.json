@@ -6,7 +6,7 @@
   "scripts": {
     "start": "cross-env NODE_ENV=production node ./src/index.js",
     "dev": "cross-env NODE_ENV=development nodemon ./src/index.js",
-    "test": "cross-env NODE_ENV=test jest --verbose  ",
+    "test": "cross-env NODE_ENV=test jest --verbose --detectOpenHandles  --watchAll --maxWorkers=1 --forceExit ",
     "test:watch": "npm run test -- --watch"
   },
   "author": "DyLaNHurtado",
@@ -24,7 +24,7 @@
     "mongoose": "^5.13.14"
   },
   "devDependencies": {
-    "jest": "^27.5.1",
+    "jest": "27.5.1",
     "nodemon": "^2.0.15",
     "supertest": "^6.2.2"
   },
@@ -36,6 +36,7 @@
   },
   "jest": {
     "testEnvironment": "node",
+    "globalTeardown": "<rootDir>/tests/test-teardown-globals.js",
     "testTimeout": 20000
   }
 }

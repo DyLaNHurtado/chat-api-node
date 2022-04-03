@@ -18,18 +18,24 @@ async function postMessage(req,res,next){
     const message= new Message();
     const params = req.body;
     message.text=params.text;
-    try{
-        const messageSaved = await message.save();
+    message.author=params.author;
+    message.chat=params.chat;
+    if(message.text && message.author && message.chat){
+        try{
+            const messageSaved = await message.save();
 
-        if(!messageSaved){
-            res.status(404).send({error:"❌ Cannot save this message"});
-        }else{
-            res.status(200).send({message:messageSaved});
+            if(!messageSaved){
+                res.status(404).send({error:"❌ Cannot save this message"});
+            }else{
+                res.status(200).send({message:messageSaved});
+            }
+
+        }catch(error){
+            next(error);
         }
-
-    }catch(error){
-        next(error);
-    }
+    }else{
+        res.status(400).send({error:"❌ Missing fields to post the message (Fields: text(notEmpty) | author(id) | chat(id) )"})
+    }   
 }
 
 async function putMessage(req,res,next){
@@ -47,17 +53,17 @@ async function putMessage(req,res,next){
     }
 }
 
-async function getAllByChat(req,next){
+async function getAllByChat(req,res){
     const idChat= req.params.id;
     try{
         const messages= await Message.find({chat:idChat}).sort({created_at:-1});
-        if(!messages){
+        if(!messages || messages.length==0){
             res.status(404).send({error:"❌ Cannot get the messages"});
         }else{
             res.status(200).send(messages);
         }
     }catch(error){
-        next(error);
+        res.status(500).send(error);
     }
 }
 
