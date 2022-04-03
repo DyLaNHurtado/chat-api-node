@@ -11,7 +11,7 @@ async function register(req,res,next){
     const {name,lastname,email,password} = req.body;
     try {
         if(!email || !password || !name || !lastname){
-            throw{error:"❌ Fill all the fields to register"};
+            res.status(400).send({error:"❌ Fill all the fields to register"});
         }
             const foundEmail = await User.findOne({email});
             if(foundEmail){throw{error:"❌ The email is already in use.!"}}
@@ -33,11 +33,11 @@ async function login(req,res,next){
         const user = await User.findOne({email});
         //Lanzo el mismo error para no dar pistas a un posible atacante
         if(!user){
-            throw{error:"❌ Incorrect email or password"};
+            res.status(400).send({error:"❌ Incorrect email or password"});
         }
         const passwordSuccess=await bcrypt.compare(password,user.password);
         if(!passwordSuccess){
-            throw{error:"❌ Incorrect email or password"};
+            res.status(400).send({error:"❌ Incorrect email or password"});
         }
         res.status(200).send({token: jwt.createToken(user,"24h")});
 
@@ -56,11 +56,9 @@ async function addContact(req,res,next){
         }else{
             const query = User.find({"email":email});
             const newContact = await query.exec();
-            console.log(newContact[0]._id );
 
                 if(!user.contacts.includes(newContact[0]._id)){
                     user.contacts= user.contacts.concat(newContact[0]._id);
-                    console.log(user.contacts)
                     await User.findByIdAndUpdate(idUser,user);
                     const chat= new Chat();
                     chat.members=[idUser,newContact[0]._id];
@@ -86,7 +84,6 @@ function uploadAvatar(req,res,next){
                 res.status(404).send({error:"❌ Cannot found user!"})
             }else{
                 let user = userData;
-                console.log(req.files)
                 if(req.files){
                     const filePath=req.files.avatar.path;
                     let fileSplit=filePath.split(path.delimiter)

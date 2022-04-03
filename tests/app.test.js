@@ -200,6 +200,139 @@ test('deleteChat works',async()=>{
 });
 }),
 
+    // --- USER --- //
+
+describe('User', () => {
+
+    test('there are users', async()=>{
+        const response =await User.find({})
+        expect(response.body).length==initialUsers.length;
+    });
+    
+    test('register works',async()=>{
+        const newUser = {
+                _id:"6249a9124d197d153e921082",
+                name:"Nuevo",
+                lastname:"Usuario",
+                email:"nuevo@usuario.com",
+                password:"1234",
+                status:"Online",
+                avatar:"",
+        }
+    
+        await api.post(process.env.API_MAINENDPOINT+'user/register')
+        .send(newUser)
+        .expect(200)
+
+        await api.post(process.env.API_MAINENDPOINT+'user/register')
+        .expect(400)
+    });
+    
+    test('login works',async()=>{
+        const user = {
+            email:"pedro@picapiedra.com",
+            password:"1234",
+        }
+
+        await api.post(process.env.API_MAINENDPOINT+'user/login')
+        .send(user)
+        .expect(200)
+
+        await api.post(process.env.API_MAINENDPOINT+'user/login')
+        .expect(400)
+    });
+    
+    test('addContact works',async()=>{
+        const user = {
+            email:"pedro@picapiedra.com",
+            password:"1234",
+        }
+        const contactToAdd = {
+            email:"vini@viniciusjr.com",
+        }
+        const res =await api.post(process.env.API_MAINENDPOINT+'user/login')
+        .send(user);
+        const{token}=res.body;
+
+        
+        await api.put(process.env.API_MAINENDPOINT+`user/add-contact/${initialUsers[0]._id}`)
+        .send(contactToAdd)
+        .expect(403)
+
+        await api.put(process.env.API_MAINENDPOINT+`user/add-contact/${initialUsers[0]._id}`)
+        .set('Authorization', `${token}`)
+        .send(contactToAdd)
+        .expect(200)
+
+        //No puede aniadir dos veces al mismo
+        await api.put(process.env.API_MAINENDPOINT+`user/add-contact/${initialUsers[0]._id}`)
+        .set('Authorization', `${token}`)
+        .send(contactToAdd)
+        .expect(400)
+
+        await api.put(process.env.API_MAINENDPOINT+`user/add-contact/${initialUsers[0]._id}`)
+        .set('Authorization', `${"bad"+token}`)
+        .send(contactToAdd)
+        .expect(400)
+    });
+    
+    test('getById works',async()=>{
+        const messages = await Message.find({});
+        const id= messages[0]._id;
+        await api.get(process.env.API_MAINENDPOINT+`message/${id}`)
+        .expect(200);
+    
+        const thisIdNotExist = "62488c3da0f2dc4c561e292a";
+        await api.get(process.env.API_MAINENDPOINT+`message/${thisIdNotExist}`)
+        .expect(404);
+    
+        await api.get(process.env.API_MAINENDPOINT+`message/${1234}`)
+        .expect(400);
+    });
+    
+    test('putMessage works',async()=>{
+        const messages = await Message.find({});
+        const messageToUpdate=messages[0];
+        messageToUpdate.text="putWorks"
+        const id= messages[0]._id;
+        await api.put(process.env.API_MAINENDPOINT+`message/${id}`)
+        .send(messageToUpdate)
+        .expect(200);
+    
+        const thisIdNotExist = "62488c3da0f2dc4c561e292a";
+        await api.put(process.env.API_MAINENDPOINT+`message/${thisIdNotExist}`)
+        .send(messageToUpdate)
+        .expect(404);
+    
+        await api.put(process.env.API_MAINENDPOINT+`message/${1234}`)
+        .expect(400);
+    
+        const messagesAfter = await Message.find({});
+        expect(messagesAfter[0].text).toEqual('putWorks');
+    });
+    
+    test('deleteMessage works',async()=>{
+        const messages = await Message.find({});
+        const messagesLength = messages.length;
+        const messageToDelete=messages[0];
+        const id = messageToDelete._id;
+        await api.delete(process.env.API_MAINENDPOINT+`message/${id}`)
+        .expect(200);
+    
+        const thisIdNotExist = "62488c3da0f2dc4c561e292a";
+        await api.delete(process.env.API_MAINENDPOINT+`message/${thisIdNotExist}`)
+        .expect(404);
+    
+        await api.delete(process.env.API_MAINENDPOINT+`message/${1234}`)
+        .expect(400);
+    
+        const messagesAfter = await Message.find({});
+        expect(messagesAfter).toHaveLength(messagesLength-1);
+        expect(messagesAfter).not.toContain(messageToDelete);
+    });
+
+})
+
 afterAll(()=>{
     mongoose.connections.forEach((x)=>x.close());
 });
