@@ -275,61 +275,6 @@ describe('User', () => {
         .send(contactToAdd)
         .expect(400)
     });
-    
-    test('getById works',async()=>{
-        const messages = await Message.find({});
-        const id= messages[0]._id;
-        await api.get(process.env.API_MAINENDPOINT+`message/${id}`)
-        .expect(200);
-    
-        const thisIdNotExist = "62488c3da0f2dc4c561e292a";
-        await api.get(process.env.API_MAINENDPOINT+`message/${thisIdNotExist}`)
-        .expect(404);
-    
-        await api.get(process.env.API_MAINENDPOINT+`message/${1234}`)
-        .expect(400);
-    });
-    
-    test('putMessage works',async()=>{
-        const messages = await Message.find({});
-        const messageToUpdate=messages[0];
-        messageToUpdate.text="putWorks"
-        const id= messages[0]._id;
-        await api.put(process.env.API_MAINENDPOINT+`message/${id}`)
-        .send(messageToUpdate)
-        .expect(200);
-    
-        const thisIdNotExist = "62488c3da0f2dc4c561e292a";
-        await api.put(process.env.API_MAINENDPOINT+`message/${thisIdNotExist}`)
-        .send(messageToUpdate)
-        .expect(404);
-    
-        await api.put(process.env.API_MAINENDPOINT+`message/${1234}`)
-        .expect(400);
-    
-        const messagesAfter = await Message.find({});
-        expect(messagesAfter[0].text).toEqual('putWorks');
-    });
-    
-    test('deleteMessage works',async()=>{
-        const messages = await Message.find({});
-        const messagesLength = messages.length;
-        const messageToDelete=messages[0];
-        const id = messageToDelete._id;
-        await api.delete(process.env.API_MAINENDPOINT+`message/${id}`)
-        .expect(200);
-    
-        const thisIdNotExist = "62488c3da0f2dc4c561e292a";
-        await api.delete(process.env.API_MAINENDPOINT+`message/${thisIdNotExist}`)
-        .expect(404);
-    
-        await api.delete(process.env.API_MAINENDPOINT+`message/${1234}`)
-        .expect(400);
-    
-        const messagesAfter = await Message.find({});
-        expect(messagesAfter).toHaveLength(messagesLength-1);
-        expect(messagesAfter).not.toContain(messageToDelete);
-    });
 
 })
 
