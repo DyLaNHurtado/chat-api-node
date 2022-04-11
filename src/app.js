@@ -3,6 +3,11 @@ const cors = require('cors')
 const app = express();
 app.use(express.json());
 app.use(cors())
+const options = {
+    cors: {
+      origin: 'http://localhost:4200',
+    },
+  };
 app.use(express.urlencoded({extended:true}));
 // --- Load Data ---
 const user_routes = require('./routes/user');

@@ -1,6 +1,8 @@
 require('dotenv').config()
 const mongoose = require("mongoose");
 const app = require("./app");
+const chalk = require('chalk');
+
 
 const {MONGO_DB_URI,MONGO_DB_TEST_URI,NODE_ENV} = process.env;
 const PORT= process.env.PORT;
@@ -20,10 +22,12 @@ mongoose.connect(connectionString,
         if(err){
             throw err;
         }else{
-            console.log("MongoDB connection successful!");
-                 app.listen(PORT,()=>{ 
-                console.log(`Best App is listening at http://localhost:${PORT}...`);
+            console.log(`\n>> ${chalk.bold.green("MongoDB connection successful!")} \n`);
+                app.listen(PORT,()=>{ 
+                console.log(`>> ${chalk.bold.blue("Express is listening at")}  ${ chalk.bold.yellow("http://localhost:"+PORT +"...")}`);
+                
             });
+            const server = require("./server")
         }
     } catch (error) {
         console.error(error);

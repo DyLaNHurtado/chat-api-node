@@ -28,6 +28,16 @@ const UserSchema= Schema({
         type:String,
         require:false
     },
+    theme:{
+        type:String,
+        require:false,
+        default: '0'
+    },
+    background:{
+        type:String,
+        require:false,
+        default: 'color_white'
+    },
     contacts: [{type: Schema.Types.ObjectId, ref:"User"}],
     chats:[{type: Schema.Types.ObjectId, ref:"Chat"}]
 },{

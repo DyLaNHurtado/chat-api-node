@@ -1,8 +1,14 @@
 const Chat = require('../models/chat');
+const User = require('../models/user');
+const Message = require('../models/message');
 
 async function getAll(req,res,next){
     try{     
-        const chats= await Chat.find({});
+        const chats= await Chat.find({})
+        .populate({path:"messages",model:'Message'})
+        .populate({path:"members",model:'User'})
+        .exec();
+        
         res.status(200).send(chats);
     }catch(error){
         next(error);
@@ -12,7 +18,9 @@ async function getAll(req,res,next){
 async function getById(req,res,next){
     const idChat= req.params.id;
     try{
-        const chat= await Chat.findById(idChat);
+        const chat= await Chat.findById(idChat)
+        .populate({path:"messages",model:'Message'})
+        .populate({path:"members",model:'User'}).exec();
         if(!chat){
             res.status(404).send({error:"❌ Cannot get this chat"});
         }else{
