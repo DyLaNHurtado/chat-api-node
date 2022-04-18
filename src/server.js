@@ -35,7 +35,7 @@
      
      } else {
          payload = JSON.parse(payload)
-     
+        console.log(payload);
          /**
           * Una vez enviado la informacion del usuario conectado en este caso es un peequeño objecto que contiene nombre y id,
           * creamos una sala y lo unimos https://socket.io/docs/rooms-and-namespaces/
