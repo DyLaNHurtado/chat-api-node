@@ -4,7 +4,12 @@
  const express = require('express');
  const app = express('./app');
  const server = require('http').createServer(app)
- const io = require('socket.io')(server);
+ const io = require('socket.io')(server,{
+    cors:{
+        origin:"*"
+    }
+    });
+
  const chalk = require('chalk');
  
  /**
@@ -19,7 +24,7 @@
  io.on('connection', function (socket) {
     console.log("hola");
      /** handshake: Es el id de conexion con el dispositivo cliente */
-     const id_handshake = socket.id;
+     const id_handshake = socket.handshake.id;
     
      /** query: En este ejemplo practico queremos enviar una información extra en la conexión
       * acerca del usuario que esta logeado en el Front. Para ello lo enviamos dentro de un objeto por defecto llamado "query"
@@ -34,7 +39,6 @@
          console.log(`${chalk.red(`Sin payload`)}`);
      
      } else {
-         payload = JSON.parse(payload)
         console.log(payload);
          /**
           * Una vez enviado la informacion del usuario conectado en este caso es un peequeño objecto que contiene nombre y id,
