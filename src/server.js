@@ -6,7 +6,7 @@
  const server = require('http').createServer(app)
  const io = require('socket.io')(server,{
     cors:{
-        origin:"*"
+        origin:"http://localhost:4200"
     }
     });
 
@@ -30,9 +30,8 @@
       * acerca del usuario que esta logeado en el Front. Para ello lo enviamos dentro de un objeto por defecto llamado "query"
       */
      let {payload} = socket.handshake.query;
- 
      
-     console.log(`${chalk.blue(`Nuevo dispositivo conectado: ${id_handshake}`)}`);
+     console.log(chalk.bold.magenta("New device connected: "+ JSON.parse(payload).id +" -> " )+ chalk.bold.blue(JSON.parse(payload).email));
  
      if (!payload) {
  
