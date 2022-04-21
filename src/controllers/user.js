@@ -8,7 +8,7 @@ const jwt = require('../services/jwt');
 
 async function register(req,res,next){
     const user = new User();
-    const {name,lastname,email,password} = req.body;
+    const {name,lastname,email,password,avatar} = req.body;
     try {
         if(!email || !password || !name || !lastname){
             res.status(400).send({error:"❌ Fill all the fields to register"});
@@ -20,6 +20,7 @@ async function register(req,res,next){
             user.password= await bcrypt.hash(password,salt);
             user.name= name;
             user.lastname=lastname;
+            user.avatar=avatar;
             user.save();
             res.status(200).send(user);
     } catch (error) {
@@ -42,6 +43,20 @@ async function login(req,res,next){
         res.status(200).send({token: jwt.createToken(user,"24h")});
 
     } catch (error) {
+        next(error);
+    }
+}
+
+async function getByEmail(req,res,next){
+    const email= req.params.email;
+    try{
+        const user = await User.find({email});
+        if(!user){
+            res.status(404).send({error:"❌ Cannot found this user"});
+        }else{
+            res.status(200).send(user);
+        }
+    }catch(error){
         next(error);
     }
 }
@@ -78,19 +93,22 @@ function uploadAvatar(req,res,next){
     const params= req.params;
     User.findById({_id:params.id},(err,userData)=>{
         if(err){
+            console.log(err.toString());
             next(err);
         }else{
             if(!userData){
                 res.status(404).send({error:"❌ Cannot found user!"})
             }else{
                 let user = userData;
+                console.log(req.files.null.path);
                 if(req.files){
-                    const filePath=req.files.avatar.path;
+                    const filePath=req.files.null.path;
                     let fileSplit=filePath.split(path.delimiter)
                     if(fileSplit.length==1){//Porque no me pilla la doble barra invertida
                         fileSplit=filePath.split("\\");
                     }
-                    let fileName = fileSplit[1];
+                    console.log(fileSplit);
+                    let fileName = fileSplit[0];
                     let extSplit = fileName.split(".");
                     let fileExt= extSplit[1];
                     if(fileExt!== "png" && fileExt!=="jpg"){
@@ -119,7 +137,9 @@ function getAvatar(req,res){
     const filePath=`./uploads/${avatarName}`;
     fs.stat(filePath,(err,stat)=>{
         if(err){
+            console.log(err.toString());
             res.status(404).send({error:"❌ Avatar not found."});
+            
         }else{
             res.sendFile(path.resolve(filePath));
         }
@@ -129,6 +149,7 @@ function getAvatar(req,res){
 module.exports = {
     register,
     login,
+    getByEmail,
     addContact,
     uploadAvatar,
     getAvatar,

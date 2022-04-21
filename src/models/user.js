@@ -26,7 +26,7 @@ const UserSchema= Schema({
     },
     avatar:{
         type:String,
-        require:false
+        require:false,
     },
     theme:{
         type:String,
@@ -36,7 +36,12 @@ const UserSchema= Schema({
     background:{
         type:String,
         require:false,
-        default: 'color_white'
+        default: 'background-image: url(https://raw.githubusercontent.com/DyLaNHurtado/chat-angular/…e449d34f6efe09a53964e64b7b379f2aa3/src/assets/img/bg-art.svg)'
+    },
+    bgColor:{
+        type:String,
+        require:false,
+        default: 'background-color: #f3efea'
     },
     contacts: [{type: Schema.Types.ObjectId, ref:"User"}],
     chats:[{type: Schema.Types.ObjectId, ref:"Chat"}]

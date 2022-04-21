@@ -5,7 +5,7 @@ app.use(express.json());
 app.use(cors())
 const options = {
     cors: {
-      origin: 'http://localhost:4200',
+      origin: 'http://localhost:4200/** http://localhost:8888/**',
     },
   };
 app.use(express.urlencoded({extended:true}));
