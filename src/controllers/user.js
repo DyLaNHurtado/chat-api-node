@@ -1,7 +1,8 @@
 const fs = require('fs');
 const path = require("path");
-const User = require('../models/user');
 const Chat = require('../models/chat');
+const User = require('../models/user');
+const Message = require('../models/message');
 const bcrypt = require('bcrypt');
 const jwt = require('../services/jwt');
 
@@ -89,6 +90,22 @@ async function addContact(req,res,next){
     }
 }
 
+async function getFullUserById(req,res,next){
+    const idUser= req.params.id;
+    try{
+        const user= await User.findById(idUser)
+        .populate({path:"contacts",model:'User'})
+        .populate({path:"chats",model:'Chat'}).exec();
+        if(!user){
+            res.status(404).send({error:"❌ Cannot get this chat"});
+        }else{
+            res.status(200).send(user);
+        }
+    }catch(error){
+        next(error);
+    }
+}
+
 async function editProfile(req,res,next){ 
     const idUser= req.params.id;
     const {name,lastname,email,status}= req.body;
@@ -170,7 +187,7 @@ function getAvatar(req,res){
             console.log(err.toString());
             res.status(404).send({error:"❌ Avatar not found."});
             
-        }else{console.log(path.resolve(filePath));
+        }else{
             res.sendFile(path.resolve(filePath));
             
         }
@@ -181,6 +198,7 @@ module.exports = {
     register,
     login,
     getByEmail,
+    getFullUserById,
     addContact,
     editProfile,
     uploadAvatar,
