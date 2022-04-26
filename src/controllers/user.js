@@ -89,6 +89,26 @@ async function addContact(req,res,next){
     }
 }
 
+async function editProfile(req,res,next){ 
+    const idUser= req.params.id;
+    const {name,lastname,email,status}= req.body;
+    try{
+        const user= await User.findById(idUser);
+        if(!user){
+            res.status(404).send({error:"❌ Cannot found the user by id"});
+        }else{
+            user.name=name;
+            user.lastname=lastname;
+            user.email=email;
+            user.status=status;
+            await user.save();
+            res.status(200).send({msg:"✅ Profile Updated!"}); 
+        }
+    }catch(error){
+        next(error);
+    }
+}
+
 function uploadAvatar(req,res,next){
     console.log("fd");
     if(res.status(400)){
@@ -162,6 +182,7 @@ module.exports = {
     login,
     getByEmail,
     addContact,
+    editProfile,
     uploadAvatar,
     getAvatar,
 }

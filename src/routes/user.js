@@ -11,6 +11,7 @@ api.post("/user/register",UserController.register);
 api.post("/user/login",UserController.login);
 api.get("/user/:email",UserController.getByEmail);
 api.put("/user/add-contact/:id",[md_auth.ensureAuth],UserController.addContact);
+api.put("/user/add-contact/:id",UserController.editProfile);
 api.put("/user/upload-avatar/:id",[md_upload_avatar],UserController.uploadAvatar);
 api.get("/user/avatar/:avatarName",[md_upload_avatar],UserController.getAvatar);
 
