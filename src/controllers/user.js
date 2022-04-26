@@ -90,31 +90,41 @@ async function addContact(req,res,next){
 }
 
 function uploadAvatar(req,res,next){
+    console.log("fd");
+    if(res.status(400)){
+        console.log("ccvb");
+    }
     const params= req.params;
     User.findById({_id:params.id},(err,userData)=>{
         if(err){
             console.log(err.toString());
             next(err);
         }else{
+            
             if(!userData){
                 res.status(404).send({error:"❌ Cannot found user!"})
             }else{
                 let user = userData;
-                console.log(req.files.null.path);
+                console.log(req.files);
                 if(req.files){
-                    const filePath=req.files.null.path;
+                    console.log();
+                    const filePath=req.files.avatar.path;
                     let fileSplit=filePath.split(path.delimiter)
                     if(fileSplit.length==1){//Porque no me pilla la doble barra invertida
                         fileSplit=filePath.split("\\");
                     }
-                    console.log(fileSplit);
                     let fileName = fileSplit[0];
+                    if(fileName=="uploads"){
+                        fileName = fileSplit[1];
+                    }
                     let extSplit = fileName.split(".");
                     let fileExt= extSplit[1];
+                    console.log(fileName,fileExt,extSplit)
                     if(fileExt!== "png" && fileExt!=="jpg"){
                         res.status(400).send({error:"❌ Image extension is not allowed (Only .png or .jpg)"})
                     }else{
                         user.avatar = fileName;
+                        console.log(user);
 
                         User.findByIdAndUpdate({_id:params.id},user,(err,userResult)=>{
                             if(err){
@@ -140,8 +150,9 @@ function getAvatar(req,res){
             console.log(err.toString());
             res.status(404).send({error:"❌ Avatar not found."});
             
-        }else{
+        }else{console.log(path.resolve(filePath));
             res.sendFile(path.resolve(filePath));
+            
         }
     });
 }

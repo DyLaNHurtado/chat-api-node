@@ -23,5 +23,8 @@ app.use(process.env.API_MAINENDPOINT,chat_routes);
 // Middlewares
 app.use(notFound);
 app.use(handleErrors)
+var bodyParser = require('body-parser');
+app.use(bodyParser.json({limit: '50mb'}));
+app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
 
 module.exports=app;
