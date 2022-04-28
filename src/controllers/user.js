@@ -1,4 +1,4 @@
-const fs = require('fs');
+    const fs = require('fs');
 const path = require("path");
 const Chat = require('../models/chat');
 const User = require('../models/user');
@@ -165,7 +165,7 @@ function uploadAvatar(req,res,next){
 
                         User.findByIdAndUpdate({_id:params.id},user,(err,userResult)=>{
                             if(err){
-                                res.status(500).send({error: "❌ Server error!"});
+                                res.status(500).send({error: "❌ Server error!"});  
                             }else if(!userResult){
                                 res.status(404).send({error:"❌ Cannot found user!"});
                             }else{
