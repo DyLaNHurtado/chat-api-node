@@ -75,10 +75,15 @@ async function addContact(req,res,next){
 
                 if(!user.contacts.includes(newContact[0]._id)){
                     user.contacts= user.contacts.concat(newContact[0]._id);
-                    await User.findByIdAndUpdate(idUser,user);
                     const chat= new Chat();
                     chat.members=[idUser,newContact[0]._id];
                     await chat.save();
+                    user.chats.push(chat._id);
+                    console.log(user.chats);
+                    newContact[0].chats.push(chat._id);
+                    newContact[0].contacts.push(idUser);
+                    await User.updateOne(User.findById(newContact[0]._id),newContact[0]);
+                    await User.updateOne(User.findById(idUser),user);
                     res.status(200).send({msg:"✅ Contact added to user!"}); 
                 }else{
                     res.status(400).send({error:"❌ That contact has already been added previously!"});

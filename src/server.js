@@ -4,13 +4,19 @@
  const express = require('express');
  const app = express('./app');
  const server = require('http').createServer(app)
+ const chalk = require('chalk');
+ const userController=require('./controllers/user')
  const io = require('socket.io')(server,{
     cors:{
         origins: ['http://localhost:4200/**','http://localhost:5000/**']
     }
     });
 
- const chalk = require('chalk');
+io.attach(server,{
+    cors:{
+        origin: 'http://localhost:4200'
+    }
+})
  
  /**
   * -----------------------------------------------------
@@ -23,36 +29,36 @@
 
  io.on('connection', function (socket) {
     console.log("hola");
-     /** handshake: Es el id de conexion con el dispositivo cliente */
-     const id_handshake = socket.handshake.id;
     
      /** query: En este ejemplo practico queremos enviar una información extra en la conexión
       * acerca del usuario que esta logeado en el Front. Para ello lo enviamos dentro de un objeto por defecto llamado "query"
       */
      let {payload} = socket.handshake.query;
+    
+     const id = JSON.parse(payload).id 
      
-     console.log(chalk.bold.magenta("New device connected: "+ JSON.parse(payload).id +" -> " )+ chalk.bold.blue(JSON.parse(payload).email));
- 
+
      if (!payload) {
  
          console.log(`${chalk.red(`Sin payload`)}`);
      
      } else {
         console.log(payload);
+        console.log(chalk.bold.magenta("New device connected: "+ id +" -> " )+ chalk.bold.blue(JSON.parse(payload).email));
          /**
           * Una vez enviado la informacion del usuario conectado en este caso es un peequeño objecto que contiene nombre y id,
           * creamos una sala y lo unimos https://socket.io/docs/rooms-and-namespaces/
           */
          socket.join(`room_${payload.id}`);
  
-         console.log(`${chalk.yellow(`El dispositivo ${id_handshake} se unio a -> ${`room_${payload.id}`}`)}`);
+         console.log(`${chalk.yellow(`El dispositivo ${id} se unio a -> ${`room_${payload.id}`}`)}`);
  
          /**
           * --------- EMITIR -------------
           * Para probar la conexion con el dispositivo unico le emitimos un mensaje a el dispositivo conectado
           */
          socket.emit('message', {
-             msg: `Hola tu eres el dispositivo ${id_handshake}, perteneces a la sala room_${payload.id}, de ${payload.user}`
+             msg: `Hola tu eres el dispositivo ${id}, perteneces a la sala room_${payload.id}, de ${payload.user}`
          });
  
          /**
