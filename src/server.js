@@ -12,11 +12,6 @@
     }
     });
 
-io.attach(server,{
-    cors:{
-        origin: 'http://localhost:4200'
-    }
-})
  
  /**
   * -----------------------------------------------------
@@ -34,8 +29,7 @@ io.attach(server,{
       * acerca del usuario que esta logeado en el Front. Para ello lo enviamos dentro de un objeto por defecto llamado "query"
       */
      let {payload} = socket.handshake.query;
-    
-     const id = JSON.parse(payload).id 
+     
      
 
      if (!payload) {
@@ -43,6 +37,8 @@ io.attach(server,{
          console.log(`${chalk.red(`Sin payload`)}`);
      
      } else {
+         console.log(payload);
+        const id = JSON.parse(payload).id 
         console.log(payload);
         console.log(chalk.bold.magenta("New device connected: "+ id +" -> " )+ chalk.bold.blue(JSON.parse(payload).email));
          /**

@@ -79,7 +79,6 @@ async function addContact(req,res,next){
                     chat.members=[idUser,newContact[0]._id];
                     await chat.save();
                     user.chats.push(chat._id);
-                    console.log(user.chats);
                     newContact[0].chats.push(chat._id);
                     newContact[0].contacts.push(idUser);
                     await User.updateOne(User.findById(newContact[0]._id),newContact[0]);
@@ -125,6 +124,25 @@ async function editProfile(req,res,next){
             user.status=status;
             await user.save();
             res.status(200).send({msg:"✅ Profile Updated!"}); 
+        }
+    }catch(error){
+        next(error);
+    }
+}
+
+async function editSettings(req,res,next){ 
+    const idUser= req.params.id;
+    const {theme,background,bgColor}= req.body;
+    try{
+        const user= await User.findById(idUser);
+        if(!user){
+            res.status(404).send({error:"❌ Cannot found the user by id"});
+        }else{
+            user.theme=theme;
+            user.background=background;
+            user.bgColor=bgColor;
+            await user.save();
+            res.status(200).send({msg:"✅ User Settings Updated!"}); 
         }
     }catch(error){
         next(error);
@@ -206,6 +224,7 @@ module.exports = {
     getFullUserById,
     addContact,
     editProfile,
+    editSettings,
     uploadAvatar,
     getAvatar,
 }

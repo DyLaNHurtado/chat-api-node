@@ -13,6 +13,7 @@ api.get("/user/:email",UserController.getByEmail);
 api.get("/user/full-data/:id",UserController.getFullUserById);
 api.put("/user/add-contact/:id",UserController.addContact);
 api.put("/user/edit-profile/:id",UserController.editProfile);
+api.put("/user/edit-settings/:id",UserController.editSettings);
 api.put("/user/upload-avatar/:id",[md_upload_avatar],UserController.uploadAvatar);
 api.get("/user/avatar/:avatarName",[md_upload_avatar],UserController.getAvatar);
 
