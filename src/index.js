@@ -24,7 +24,7 @@ mongoose.connect(connectionString,
         }else{
             console.log(`\n>> ${chalk.bold.green("MongoDB connection successful!")} \n`);
                 app.listen(PORT,()=>{ 
-                console.log(`>> ${chalk.bold.blue("Express is listening at")}  ${ chalk.bold.yellow("http://localhost:"+PORT +"...")}`);
+                console.log(`>> ${chalk.bold.blue("API Rest is listening at")}  ${ chalk.bold.yellow("http://localhost:"+PORT +"...")}`);
                 
             });
             const server = require("./server")

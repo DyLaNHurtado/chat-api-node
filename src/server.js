@@ -19,7 +19,7 @@
   * ----------------------------------------------------
   */
   server.listen(5000, function () {
-    console.log(`\n>> ${chalk.bold.magenta("Socket is listening at port:")}  ${chalk.bold.yellow(5000)}\n`);
+    console.log(`\n>> ${chalk.bold.magenta("WebSockets are listening at port:")}  ${chalk.bold.yellow(5000)}\n`);
 });
 
  io.on('connection', function (socket) {
@@ -38,23 +38,23 @@
      
      } else {
          console.log(payload);
-        const id = JSON.parse(payload).id 
+        const userId = JSON.parse(payload).id 
         console.log(payload);
-        console.log(chalk.bold.magenta("New device connected: "+ id +" -> " )+ chalk.bold.blue(JSON.parse(payload).email));
+        console.log(chalk.bold.magenta("New device connected: "+ userId +" >> " )+ chalk.bold.blue(JSON.parse(payload).email));
          /**
           * Una vez enviado la informacion del usuario conectado en este caso es un peequeño objecto que contiene nombre y id,
           * creamos una sala y lo unimos https://socket.io/docs/rooms-and-namespaces/
           */
-         socket.join(`room_${payload.id}`);
+         console.log(payload);
+    
  
-         console.log(`${chalk.yellow(`El dispositivo ${id} se unio a -> ${`room_${payload.id}`}`)}`);
  
          /**
           * --------- EMITIR -------------
           * Para probar la conexion con el dispositivo unico le emitimos un mensaje a el dispositivo conectado
           */
          socket.emit('message', {
-             msg: `Hola tu eres el dispositivo ${id}, perteneces a la sala room_${payload.id}, de ${payload.user}`
+             msg: `Hola tu eres el dispositivo ${userId}, perteneces a la sala room_${payload.id}, de ${payload.user}`
          });
  
          /**
@@ -81,7 +81,7 @@
                      /** Otros posibles casos */
                      break;
              }
- 
+
          });
      };
  
@@ -89,7 +89,7 @@
       * Si un dispositivo se desconecto lo detectamos aqui
       */
      socket.on('disconnect', function () {
-         console.log('user disconnected');
+         console.log('User disconnected >>',chalk.bold.blue(JSON.parse(payload).email));
      });
  });
 
