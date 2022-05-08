@@ -68,12 +68,10 @@ let usersConnected=[];
          });
 
          socket.on('onInputFocus',(idChat)=>{
-             console.log("focus" ,idChat);
             socket.to(`chat_${idChat}`).emit('writting')
          })
 
          socket.on('onInputNotFocus',(idChat)=>{
-            console.log("nofocus");
             socket.to(`chat_${idChat}`).emit('notWritting')
          })
          /**

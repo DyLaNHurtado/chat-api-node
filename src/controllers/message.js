@@ -1,4 +1,5 @@
 const Message = require('../models/message');
+const Chat = require('../models/chat');
 
 async function getById(req,res,next){
     const idMessage= req.params.id;
@@ -27,7 +28,15 @@ async function postMessage(req,res,next){
             if(!messageSaved){
                 res.status(404).send({error:"❌ Cannot save this message"});
             }else{
-                res.status(200).send({message:messageSaved});
+                const chat = await Chat.findById(params.chat);Message
+                if(chat){
+                    chat.messages.push(messageSaved._id);
+                    await Chat.updateOne(chat);
+                    res.status(200).send({message:messageSaved});
+                }else{
+                    res.status(400).send({error:"❌ Id of chat incorrect"});
+                }
+                
             }
 
         }catch(error){
