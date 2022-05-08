@@ -66,6 +66,16 @@ let usersConnected=[];
              usersConnected=  [... new Set(usersConnected)];
              socket.emit('anwserWhoAreConnected',usersConnected);
          });
+
+         socket.on('onInputFocus',(idChat)=>{
+             console.log("focus" ,idChat);
+            socket.to(`chat_${idChat}`).emit('writting')
+         })
+
+         socket.on('onInputNotFocus',(idChat)=>{
+            console.log("nofocus");
+            socket.to(`chat_${idChat}`).emit('notWritting')
+         })
          /**
           * ----------- ESCUCHAR -------------
           * Cuando el cliente nos emite un mensaje la api los escucha de la siguiente manera
@@ -93,7 +103,8 @@ let usersConnected=[];
       */
      socket.on('disconnect', function () {
          console.log('User disconnected >>',chalk.bold.blue(JSON.parse(payload).email));
-         socket.broadcast.emit('userDisconnected',JSON.parse(socket.handshake.query.payload).id);
+
+         socket.broadcast.emit('userDisconnected',JSON.parse(socket.handshake.query.payload).id , usersConnected);
      });
  });
 
