@@ -28,11 +28,11 @@ async function postMessage(req,res,next){
             if(!messageSaved){
                 res.status(404).send({error:"❌ Cannot save this message"});
             }else{
-                const chat = await Chat.findById(params.chat);Message
+                const chat = await Chat.findById(params.chat);
                 if(chat){
                     chat.messages.push(messageSaved._id);
-                    await Chat.updateOne(chat);
-                    res.status(200).send({message:messageSaved});
+                    await chat.save();
+                    res.status(200).send(messageSaved);
                 }else{
                     res.status(400).send({error:"❌ Id of chat incorrect"});
                 }
