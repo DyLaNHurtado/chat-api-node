@@ -6,6 +6,10 @@ const MessageSchema= Schema({
         type:String,
         require:true
     },
+    time:{
+        type:String,
+        require:false,
+    },
     author:{type: Schema.Types.ObjectId, ref:"User"},
     chat:{type: Schema.Types.ObjectId, ref:"Chat"},
 },{
