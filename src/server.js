@@ -99,10 +99,20 @@ let usersConnected=[];
      /**
       * Si un dispositivo se desconecto lo detectamos aqui
       */
+
+    socket.on('removeConnected',(name)=>{
+        let index = usersConnected.indexOf(name);
+        if(index!==-1){
+            usersConnected.splice(index,1);
+        }
+    });
+
+
      socket.on('disconnect', function () {
          console.log('User disconnected >>',chalk.bold.blue(JSON.parse(payload).email));
-
-         socket.broadcast.emit('userDisconnected',JSON.parse(socket.handshake.query.payload).id , usersConnected);
+        
+        socket.broadcast.emit('userDisconnected',JSON.parse(socket.handshake.query.payload).id , usersConnected);
+        console.log(usersConnected);
      });
  });
 
