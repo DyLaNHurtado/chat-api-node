@@ -113,10 +113,11 @@ let usersConnected=[];
 
 
      socket.on('disconnect', function () {
-         console.log('User disconnected >>',chalk.bold.blue(JSON.parse(payload).email));
-        
-        socket.broadcast.emit('userDisconnected',JSON.parse(socket.handshake.query.payload).id , usersConnected);
-        console.log(usersConnected);
+        if(socket.handshake.query.payload){
+            console.log('User disconnected >>',chalk.bold.blue(JSON.parse(socket.handshake.query.payload).email));
+            socket.broadcast.emit('userDisconnected',JSON.parse(socket.handshake.query.payload).id , usersConnected);
+            console.log(usersConnected);
+        }
      });
  });
 
