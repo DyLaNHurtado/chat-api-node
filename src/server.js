@@ -74,9 +74,7 @@ let usersConnected=[];
 
          socket.on('messageSent',(idChat,userId)=>{
             socket.to(`chat_${idChat}`).emit('newMessage');
-            
-            socket.to(`chat_${idChat}`).emit('messageSentCL',userId);
-            console.log(idChat,userId);
+            socket.to(`chat_${idChat}`).emit('messageSentCL',idChat,userId);
          });
      };
  
