@@ -55,10 +55,6 @@ let usersConnected=[];
          }
          socket.broadcast.emit('userConnected',userId);
  
-         /**
-          * --------- EMITIR -------------
-          * Para probar la conexion con el dispositivo unico le emitimos un mensaje a el dispositivo conectado
-          */
          
         
          socket.on('askWhoAreConnected',(name)=>{
@@ -66,6 +62,7 @@ let usersConnected=[];
              usersConnected=  [... new Set(usersConnected)];
              socket.emit('anwserWhoAreConnected',usersConnected);
          });
+
 
          socket.on('onInputFocus',(idChat)=>{
             socket.to(`chat_${idChat}`).emit('writting');
@@ -75,34 +72,15 @@ let usersConnected=[];
             socket.to(`chat_${idChat}`).emit('notWritting');
          });
 
-         socket.on('messageSent',(idChat)=>{
+         socket.on('messageSent',(idChat,userId)=>{
             socket.to(`chat_${idChat}`).emit('newMessage');
-         })
-         /**
-          * ----------- ESCUCHAR -------------
-          * Cuando el cliente nos emite un mensaje la api los escucha de la siguiente manera
-          */
-         socket.on('default', function(res){
- 
-             switch (res.event) {
-                 case 'chatSelected':
-                     /**
-                      * Si el evento que escucha es "message", se parsea la informacion recibida
-                      * y posteriormente se emite un "message" a todos los dispositivos unidos a la sala.
-                      */
- 
-                     break;
-                 default:
-                     /** Otros posibles casos */
-                     break;
-             }
-
+            
+            socket.to(`chat_${idChat}`).emit('messageSentCL',userId);
+            console.log(idChat,userId);
          });
      };
  
-     /**
-      * Si un dispositivo se desconecto lo detectamos aqui
-      */
+
 
     socket.on('removeConnected',(name)=>{
         let index = usersConnected.indexOf(name);
