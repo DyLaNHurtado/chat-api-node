@@ -6,7 +6,7 @@
   "scripts": {
     "start": "cross-env NODE_ENV=production node ./src/index.js",
     "dev": "cross-env NODE_ENV=development nodemon ./src/index.js",
-    "test": "cross-env NODE_ENV=test jest --verbose --detectOpenHandles  --watchAll --maxWorkers=1 --forceExit ",
+    "test": "cross-env NODE_ENV=test jest --silent --maxWorkers=1 --forceExit ",
     "test:watch": "npm run test -- --watch"
   },
   "author": "DyLaNHurtado",

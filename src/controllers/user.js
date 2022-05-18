@@ -114,10 +114,15 @@ async function editProfile(req,res,next){
     const idUser= req.params.id;
     const {name,lastname,email,status}= req.body;
     try{
+        
         const user= await User.findById(idUser);
         if(!user){
             res.status(404).send({error:"❌ Cannot found the user by id"});
         }else{
+            if(!name || !lastname || !email || !status){
+                console.log(req.body);
+                res.status(400).send({error:"❌ Bad request there are not body"});
+            }
             user.name=name;
             user.lastname=lastname;
             user.email=email;
@@ -138,6 +143,9 @@ async function editSettings(req,res,next){
         if(!user){
             res.status(404).send({error:"❌ Cannot found the user by id"});
         }else{
+            if(!theme || !background || !bgColor ){
+                res.status(400).send({error:"❌ Bad request there are not body"});
+            }
             user.theme=theme;
             user.background=background;
             user.bgColor=bgColor;

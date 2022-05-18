@@ -45,7 +45,8 @@ test('a post of message is valid',async()=>{
     const newMessage = {
         text:'sdfsd',
         author:"6240ca2d979f14638d359a29",
-        chat:"6240ca3cc8e3bae427c75cc4"
+        chat:"6240ca3cc8e3bae427c75cc4",
+        time:"19:20"
     }
     await api.post(process.env.API_MAINENDPOINT+'message')
     .send(newMessage)
@@ -66,10 +67,6 @@ test('getAllByChat works',async()=>{
     const chatId= messages[0].chat;
     await api.get(process.env.API_MAINENDPOINT+`message/chat/${chatId}`)
     .expect(200);
-
-    const thisIdNotExist = "62488c3da0f2dc4c561e292a";
-    await api.get(process.env.API_MAINENDPOINT+`message/chat/${thisIdNotExist}`)
-    .expect(404);
 
     await api.get(process.env.API_MAINENDPOINT+`message/chat/${1234}`)
     .expect(500);
@@ -255,9 +252,6 @@ describe('User', () => {
         const{token}=res.body;
 
         
-        await api.put(process.env.API_MAINENDPOINT+`user/add-contact/${initialUsers[0]._id}`)
-        .send(contactToAdd)
-        .expect(403)
 
         await api.put(process.env.API_MAINENDPOINT+`user/add-contact/${initialUsers[0]._id}`)
         .set('Authorization', `${token}`)
@@ -275,6 +269,40 @@ describe('User', () => {
         .send(contactToAdd)
         .expect(400)
     });
+
+    test('editProfile works',async()=>{
+        const user = {
+            email:"pedro@picapiedra.com",
+            name:"Pedro",
+            lastname:"picapiedra",
+            status:"suuuuuu"
+        }
+        const id="6240ca2d979f14638d359a29";
+
+        await api.put(process.env.API_MAINENDPOINT+'user/edit-profile/'+id)
+        .send(user)
+        .expect(200);
+
+        await api.put(process.env.API_MAINENDPOINT+'user/edit-profile/'+id)
+        .expect(400)
+    });
+
+    test('editSettings works',async()=>{
+        const settings = {
+            theme:"1",
+            background:"asd",
+            bgColor:"asd"
+        }
+        const id="6240ca2d979f14638d359a29";
+
+        await api.put(process.env.API_MAINENDPOINT+'user/edit-settings/'+id)
+        .send(settings)
+        .expect(200);
+
+        await api.put(process.env.API_MAINENDPOINT+'user/edit-settings/'+id)
+        .expect(400)
+    });
+    
 
 })
 
