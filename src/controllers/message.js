@@ -67,7 +67,8 @@ async function getAllByChat(req,res){
     const idChat= req.params.id;
     try{
         const messages= await Message.find({chat:idChat}).sort({created_at:-1});
-        if(!messages || messages.length==0){
+        if(messages.length==0){res.status(200).send([])}
+        if(!messages){
             res.status(404).send({error:"❌ Cannot get the messages"});
         }else{
             res.status(200).send(messages);
