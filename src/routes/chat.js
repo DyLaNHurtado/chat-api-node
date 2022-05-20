@@ -6,6 +6,6 @@ const api = express.Router();
 api.get("/chat",ChatController.getAll);
 api.get("/chat/:id",ChatController.getById);
 api.put("/chat/:id",ChatController.putChat);
-api.delete("/chat/:id",ChatController.deleteChat);
+api.delete("/chat/:id",ChatController.deleteMessageChat);
 
 module.exports = api;

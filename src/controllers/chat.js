@@ -1,6 +1,7 @@
 const Chat = require('../models/chat');
 const User = require('../models/user');
 const Message = require('../models/message');
+const { deleteMany } = require('../models/chat');
 
 async function getAll(req,res,next){
     try{     
@@ -31,10 +32,17 @@ async function getById(req,res,next){
     }
 }
 
-async function deleteChat(req,res,next){
-    const idChat= req.params.id;
+async function deleteMessageChat(req,res,next){
+    const idChat = req.params.id;
     try{
-        const chat= await Chat.findByIdAndDelete(idChat);
+        const chat = await Chat.findById(idChat);
+        chat.messages=[];
+        await chat.save();
+        const messages = await Message.find({chat:idChat});
+        if(messages.length!=0){
+            await Message.deleteMany({messages});
+        }
+        
         if(!chat){
             res.status(404).send({error:"❌ Cannot delete this chat"});
         }else{
@@ -64,5 +72,5 @@ module.exports={
     getAll,
     getById,
     putChat,
-    deleteChat,
+    deleteMessageChat,
 }
