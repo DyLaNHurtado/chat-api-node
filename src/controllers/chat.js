@@ -38,11 +38,7 @@ async function deleteMessageChat(req,res,next){
         const chat = await Chat.findById(idChat);
         chat.messages=[];
         await chat.save();
-        const messages = await Message.find({chat:idChat});
-        if(messages.length!=0){
-            await Message.deleteMany({messages});
-        }
-        
+        await Message.deleteMany({chat:idChat});
         if(!chat){
             res.status(404).send({error:"❌ Cannot delete this chat"});
         }else{
