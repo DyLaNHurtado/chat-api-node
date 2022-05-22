@@ -220,7 +220,7 @@ async function uploadMedia(req, res, next) {
         console.log(req.files);
         if (req.files) {
           console.log();
-          const filePath = req.files.null.path;
+          const filePath = req.files.media.path;
           let fileSplit = filePath.split(path.delimiter);
           if (fileSplit.length == 1) {
             //Porque no me pilla la doble barra invertida

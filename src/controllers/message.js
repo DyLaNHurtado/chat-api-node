@@ -17,6 +17,20 @@ async function getById(req, res, next) {
   }
 }
 
+async function getLastAudioMessage(req, res, next) {
+  try {
+    const audiomessages = Object.values(await Message.find({ type: "audio" }));
+    const lastMessage = audiomessages[audiomessages.length - 1];
+    if (!lastMessage) {
+      res.status(404).send({ error: "❌ Cannot found this message" });
+    } else {
+      res.status(200).send(lastMessage);
+    }
+  } catch (error) {
+    next(error);
+  }
+}
+
 async function postMessage(req, res, next) {
   const message = new Message();
   const params = req.body;
@@ -110,4 +124,5 @@ module.exports = {
   postMessage,
   putMessage,
   deleteMessage,
+  getLastAudioMessage,
 };
