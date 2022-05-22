@@ -1,30 +1,30 @@
-const express = require('express');
-const cors = require('cors')
+const express = require("express");
+const cors = require("cors");
 const app = express();
 app.use(express.json());
-app.use(cors())
+app.use(cors());
 const options = {
-    cors: {
-      origin: 'http://localhost:4200/** http://localhost:8888/**',
-    },
-  };
-app.use(express.urlencoded({extended:true}));
+  cors: {
+    origin: "http://localhost:4200/** http://localhost:8888/**",
+  },
+};
+app.use(express.urlencoded({ extended: true }));
 // --- Load Data ---
-const user_routes = require('./routes/user');
-const message_routes = require('./routes/message');
-const chat_routes = require('./routes/chat');
-const notFound = require('./middlewares/notFound');
-const handleErrors = require('./middlewares/handleErrors');
+const user_routes = require("./routes/user");
+const message_routes = require("./routes/message");
+const chat_routes = require("./routes/chat");
+const notFound = require("./middlewares/notFound");
+const handleErrors = require("./middlewares/handleErrors");
 
 // --- Base Routes ---
-app.use(process.env.API_MAINENDPOINT,user_routes);
-app.use(process.env.API_MAINENDPOINT,message_routes);
-app.use(process.env.API_MAINENDPOINT,chat_routes);
+app.use(process.env.API_MAINENDPOINT, user_routes);
+app.use(process.env.API_MAINENDPOINT, message_routes);
+app.use(process.env.API_MAINENDPOINT, chat_routes);
 // Middlewares
 app.use(notFound);
-app.use(handleErrors)
-var bodyParser = require('body-parser');
-app.use(bodyParser.json({limit: '50mb'}));
-app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
+app.use(handleErrors);
+var bodyParser = require("body-parser");
+app.use(bodyParser.json({ limit: "50mb" }));
+app.use(bodyParser.urlencoded({ limit: "50mb", extended: true }));
 
-module.exports=app;
+module.exports = app;
