@@ -1,5 +1,7 @@
 const Message = require('../models/message');
 const Chat = require('../models/chat');
+const { find, findById } = require('../models/message');
+const message = require('../models/message');
 
 async function getById(req,res,next){
     const idMessage= req.params.id;
@@ -65,16 +67,24 @@ async function putMessage(req,res,next){
 
 async function getAllByChat(req,res){
     const idChat= req.params.id;
+    
     try{
         const messages= await Message.find({chat:idChat}).sort({created_at:-1});
-        if(messages.length==0){res.status(200).send([])}
+        
         if(!messages){
-            res.status(404).send({error:"❌ Cannot get the messages"});
+            return res.status(404).send({error:"❌ There are not messages"});
         }else{
-            res.status(200).send(messages);
+            const chat =  await Chat.findById(idChat);
+            if(chat){
+                res.status(200).send(messages);
+            }else{
+                return res.status(404).send({error:"❌ Cannot find the chat"});
+            }
         }
     }catch(error){
-        res.status(500).send(error);
+        console.log(error);
+        return res.status(500).send(error);
+        
     }
 }
 
