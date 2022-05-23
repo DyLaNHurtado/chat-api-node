@@ -5,6 +5,7 @@ const User = require("../models/user");
 const Message = require("../models/message");
 const bcrypt = require("bcrypt");
 const jwt = require("../services/jwt");
+const { findById } = require("../models/chat");
 
 async function register(req, res, next) {
   const user = new User();
@@ -208,7 +209,9 @@ async function uploadMedia(req, res, next) {
   }
   const params = req.params;
   console.log(params);
-  Chat.findById(params.id, async (err, chatData) => {
+  const user = await User.findById(params.idUser);
+  if(user){
+  Chat.findById(params.idChat, async (err, chatData) => {
     if (err) {
       console.log(err.toString());
       next(err);
@@ -241,6 +244,10 @@ async function uploadMedia(req, res, next) {
             let newMessage = new Message();
             newMessage.type = "audio";
             newMessage.url = fileName;
+            newMessage.chat = chat._id;
+            newMessage.time = `${('0'+(new Date().getHours())).slice(-2)}:${('0'+(new Date().getMinutes())).slice(-2)}`;
+            newMessage.author = params.idUser
+
             await newMessage.save();
             chat.messages.push(newMessage._id);
             console.log(chat);
@@ -250,7 +257,7 @@ async function uploadMedia(req, res, next) {
             );
             console.log(chatResult);
             if (!chatResult) {
-              res.status(404).send({ error: "❌ Cannot found user!" });
+              res.status(404).send({ error: "❌ Cannot found chat!" });
             } else {
               res.status(200).send({ msg: "✅ Audio uploaded!" });
             }
@@ -258,7 +265,9 @@ async function uploadMedia(req, res, next) {
         }
       }
     }
-  });
+  });}else{
+    res.status(400).send({error: "❌ Cannot found user!" })
+  }
 }
 
 function getFile(req, res) {

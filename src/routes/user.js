@@ -13,7 +13,7 @@ api.put("/user/add-contact/:id", UserController.addContact);
 api.put("/user/edit-profile/:id", UserController.editProfile);
 api.put("/user/edit-settings/:id", UserController.editSettings);
 api.put("/user/upload-image/:id", [md_upload_file], UserController.uploadImage);
-api.put("/user/upload-media/:id", [md_upload_file], UserController.uploadMedia);
+api.put("/user/upload-media/:idChat/:idUser", [md_upload_file], UserController.uploadMedia);
 api.get("/user/file/:fileName", [md_upload_file], UserController.getFile);
 
 module.exports = api;
