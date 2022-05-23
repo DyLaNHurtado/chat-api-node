@@ -1,0 +1,551 @@
+{
+	"info": {
+		"_postman_id": "862095b2-3cc4-44e0-aeba-ee1a524419fb",
+		"name": "🚀 Cosmos 🚀",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "19205685"
+	},
+	"item": [
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "Login",
+					"request": {
+						"auth": {
+							"type": "bearer"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\":\"dylanhurtado43@gmail.com\",\r\n    \"password\":\"123456\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8888/api/v1/user/login/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8888",
+							"path": [
+								"api",
+								"v1",
+								"user",
+								"login",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getByEmail",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyNDA0ZTRiNzE5ODFjMDQ2MjNkM2ZiMCIsImVtYWlsIjoiZHlsYW5odXJ0YWRvNDNAZ21haWwuY29tIiwiaWF0IjoxNjUwNTM3MDUwLCJleHAiOjE2NTA2MjM0NTB9.8NmKTRycPwyVvc8e1w8T4XGSVc2nbdejMQ7n6sCVs-k",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8888/api/v1/user/dylanhurtado43@gmail.com",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8888",
+							"path": [
+								"api",
+								"v1",
+								"user",
+								"dylanhurtado43@gmail.com"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Register",
+					"request": {
+						"auth": {
+							"type": "bearer"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "",
+									"value": "",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8888/api/v1/user/register/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8888",
+							"path": [
+								"api",
+								"v1",
+								"user",
+								"register",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "uploadImage",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyNjEzOWNkNzVjZWJjYWFmYTFiNzc5ZSIsImVtYWlsIjoiZHlsYW5odXJ0YWRvNDNAZ21haWwuY29tIiwiaWF0IjoxNjUwNTUyMDYxLCJleHAiOjE2NTA2Mzg0NjF9.rk0923hCLRbNzjsOVYlp30--UEybftQEvGnFpQwksp0",
+								"type": "text"
+							},
+							{
+								"key": "",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "",
+									"type": "file",
+									"src": "Escritorio/Metallica_logo.png"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8888/api/v1/user/upload-image/6261531a2ffbeff843705a5f",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8888",
+							"path": [
+								"api",
+								"v1",
+								"user",
+								"upload-image",
+								"6261531a2ffbeff843705a5f"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getFile",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyNjEzOWNkNzVjZWJjYWFmYTFiNzc5ZSIsImVtYWlsIjoiZHlsYW5odXJ0YWRvNDNAZ21haWwuY29tIiwiaWF0IjoxNjUwNTUyMDYxLCJleHAiOjE2NTA2Mzg0NjF9.rk0923hCLRbNzjsOVYlp30--UEybftQEvGnFpQwksp0",
+								"type": "text"
+							},
+							{
+								"key": "",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "",
+									"type": "file",
+									"src": "Escritorio/Metallica_logo.png"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8888/api/v1/user/file/4fDkzPzHMgmm4Fq6znwM0xue.png",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8888",
+							"path": [
+								"api",
+								"v1",
+								"user",
+								"file",
+								"4fDkzPzHMgmm4Fq6znwM0xue.png"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "editProfile",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\":\"hola2\",\n    \"lastname\":\"hola2\",\n    \"email\":\"hola@hola\",\n    \"status\":\"Sleeping...\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8888/api/v1/user/edit-profile/6261531a2ffbeff843705a5f",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8888",
+							"path": [
+								"api",
+								"v1",
+								"user",
+								"edit-profile",
+								"6261531a2ffbeff843705a5f"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "AddContact",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyNDA0ZTRiNzE5ODFjMDQ2MjNkM2ZiMCIsImVtYWlsIjoiZHlsYW5odXJ0YWRvNDNAZ21haWwuY29tIiwiaWF0IjoxNjQ4MzgxOTI4LCJleHAiOjE2NDg0MjUxMjh9.J09fXueiLrpbAQPXR023_nUFTv_7vSUqBufpEeMnzSk",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\":\"new@user\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8888/api/v1/user/add-contact/6261531a2ffbeff843705a5f",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8888",
+							"path": [
+								"api",
+								"v1",
+								"user",
+								"add-contact",
+								"6261531a2ffbeff843705a5f"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getFullUserById",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8888/api/v1/user/full-data/6267fcaf97a64880afc04ec8",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8888",
+							"path": [
+								"api",
+								"v1",
+								"user",
+								"full-data",
+								"6267fcaf97a64880afc04ec8"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "uploadMedia",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8888/api/v1/user/upload-media/625301d9f10ec03818c491bf",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8888",
+							"path": [
+								"api",
+								"v1",
+								"user",
+								"upload-media",
+								"625301d9f10ec03818c491bf"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Chat",
+			"item": [
+				{
+					"name": "getById",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8888/api/v1/chat/625301d9f10ec03818c491bf",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8888",
+							"path": [
+								"api",
+								"v1",
+								"chat",
+								"625301d9f10ec03818c491bf"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getAll",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8888/api/v1/chat/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8888",
+							"path": [
+								"api",
+								"v1",
+								"chat",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteMessagesById",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8888/api/v1/chat/6284bac9d2f2b47cc1d249f0",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8888",
+							"path": [
+								"api",
+								"v1",
+								"chat",
+								"6284bac9d2f2b47cc1d249f0"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Message",
+			"item": [
+				{
+					"name": "getAllByChat",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8888/api/v1/message/chat/6284b232ade1521ccea6dc8e",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8888",
+							"path": [
+								"api",
+								"v1",
+								"message",
+								"chat",
+								"6284b232ade1521ccea6dc8e"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getById",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8888/api/v1/message/idMessage",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8888",
+							"path": [
+								"api",
+								"v1",
+								"message",
+								"idMessage"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "postMessage",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"type\":\"text\",\n    \"time\":\"10:30\",\n    \"text\":\"fsokdofs\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8888/api/v1/message/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8888",
+							"path": [
+								"api",
+								"v1",
+								"message",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "putMessage",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"text\":\"fds\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8888/api/v1/message/idMessage",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8888",
+							"path": [
+								"api",
+								"v1",
+								"message",
+								"idMessage"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteById",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8888/api/v1/message/idMessage",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8888",
+							"path": [
+								"api",
+								"v1",
+								"message",
+								"idMessage"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getLastTypeAudio",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8888/api/v1/message/last/audio ",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8888",
+							"path": [
+								"api",
+								"v1",
+								"message",
+								"last",
+								"audio "
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
