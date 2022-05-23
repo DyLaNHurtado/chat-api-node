@@ -34,11 +34,12 @@ async function getLastAudioMessage(req, res, next) {
 async function postMessage(req, res, next) {
   const message = new Message();
   const params = req.body;
+  message.type = params.type;
   message.text = params.text;
   message.author = params.author;
   message.chat = params.chat;
   message.time = params.time;
-  if (message.text && message.author && message.chat && message.time) {
+  if (message.text && message.author && message.chat && message.time && message.type) {
     try {
       const messageSaved = await message.save();
 
