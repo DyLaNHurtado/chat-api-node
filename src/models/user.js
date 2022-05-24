@@ -22,7 +22,7 @@ const UserSchema= Schema({
     status:{
         type:String,
         require:false,
-        default: "Online"
+        default: "Hi! I am a new user of Cosmos"
     },
     avatar:{
         type:String,
