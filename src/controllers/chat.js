@@ -65,11 +65,11 @@ async function putChat(req, res, next) {
   }
 }
 
-async function uploadVideo(req, res, next) {
+function uploadVideo(req, res, next) {
   upload(req,res,next,"video");
 }
 
-async function uploadAudio(req, res, next) {
+function uploadAudio(req, res, next) {
   upload(req,res,next,"audio");
 }
 
