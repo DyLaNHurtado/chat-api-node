@@ -11,7 +11,6 @@ function ensureAuth(req, res, next) {
       });
   }
   const token = req.headers.authorization.replace(/['"]+/g, "");
-  console.log(token);
   const payload = jwt.decodeToken(token, SECRET_KEY);
   try {
     if (payload.exp <= moment().unix()) {

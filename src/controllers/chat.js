@@ -91,7 +91,6 @@ async function upload(req,res,next,typeMessage){
         res.status(404).send({ error: "❌ Cannot found user!" });
       } else {
         let chat = chatData;
-        console.log(req.files);
         if (req.files) {
           const filePath = req.files.file.path;
           let fileSplit = filePath.split(path.delimiter);
@@ -113,7 +112,6 @@ async function upload(req,res,next,typeMessage){
 
             await newMessage.save();
             chat.messages.push(newMessage._id);
-            console.log(chat);
 
             const chatResult = await Chat.updateOne(
               await Chat.findById(chat._id),

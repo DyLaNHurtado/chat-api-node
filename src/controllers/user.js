@@ -152,10 +152,6 @@ async function editSettings(req, res, next) {
 }
 
 function uploadAvatar(req, res, next) {
-  console.log("fd");
-  if (res.status(400)) {
-    console.log("ccvb");
-  }
   const params = req.params;
   User.findById({ _id: params.id }, (err, userData) => {
     if (err) {
@@ -166,7 +162,6 @@ function uploadAvatar(req, res, next) {
         res.status(404).send({ error: "❌ Cannot found user!" });
       } else {
         let user = userData;
-        console.log(req.files);
         if (req.files) {
           console.log(req.files.avatar);
           const filePath = req.files.avatar.path;
@@ -180,7 +175,6 @@ function uploadAvatar(req, res, next) {
             fileName = fileSplit[1];
           }
           user.avatar = fileName;
-          console.log(user);
 
           User.findByIdAndUpdate(
             { _id: params.id },

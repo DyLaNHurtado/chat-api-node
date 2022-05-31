@@ -27,21 +27,14 @@ server.listen(5000, function () {
 });
 let usersConnected = [];
 io.on("connection", function (socket) {
-  console.log("hola");
-
-  /** query: En este ejemplo practico queremos enviar una información extra en la conexión
-   * acerca del usuario que esta logeado en el Front. Para ello lo enviamos dentro de un objeto por defecto llamado "query"
-   */
   let { payload } = socket.handshake.query;
 
   if (!payload) {
     console.log(`${chalk.red(`Sin payload`)}`);
   } else {
-    console.log(payload);
     const userId = JSON.parse(payload).id;
     const userEmail = JSON.parse(payload).email;
     const userChats = JSON.parse(payload).chats;
-    console.log(payload);
     console.log(
       chalk.bold.magenta("User connected: " + userId + " >> ") +
         chalk.bold.blue(userEmail)
@@ -98,7 +91,6 @@ io.on("connection", function (socket) {
         JSON.parse(socket.handshake.query.payload).id,
         usersConnected
       );
-      console.log(usersConnected);
     }
   });
 });
