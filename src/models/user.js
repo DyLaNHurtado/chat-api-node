@@ -22,7 +22,7 @@ const UserSchema= Schema({
     status:{
         type:String,
         require:false,
-        default: "Hi! I am a new user of Cosmos"
+        default: "Hi! I am a new user in Cosmos!"
     },
     avatar:{
         type:String,
@@ -41,7 +41,7 @@ const UserSchema= Schema({
     bgColor:{
         type:String,
         require:false,
-        default: 'background-color: #f3efea'
+        default: 'background: linear-gradient(to bottom, #f3efea,#8b8b8b);'
     },
     contacts: [{type: Schema.Types.ObjectId, ref:"User"}],
     chats:[{type: Schema.Types.ObjectId, ref:"Chat"}]

@@ -1,0 +1,53 @@
+<div fxLayout="row">
+  <div fxFlex="33" fxLayoutAlign="center center">
+    <mat-button-toggle-group>
+      <mat-button-toggle (click)="setView(CalendarView.Month)" [class.active]="view === CalendarView.Month">
+        <span [translate]="['general.month','Month']"></span>
+      </mat-button-toggle>
+      <mat-button-toggle (click)="setView(CalendarView.Week)" [class.active]="view === CalendarView.Week">
+        <span [translate]="['general.week','Week']"></span>
+      </mat-button-toggle>
+      <mat-button-toggle (click)="setView(CalendarView.Day)" value="initial" [class.active]="view === CalendarView.Day">
+        <span [translate]="['general.day','Day']"></span>
+      </mat-button-toggle>
+    </mat-button-toggle-group>
+  </div>
+  <div fxFlex="34" fxLayoutAlign="center center">
+    <span>{{ viewDate | calendarDate:(view + 'ViewTitle'):'en' }}</span>
+  </div>
+  <div fxFlex="33" fxLayoutAlign="center center">
+    <mat-button-toggle-group value="initial">
+      <mat-button-toggle mwlCalendarPreviousView [view]="view" [(viewDate)]="viewDate">
+        <span [translate]="['general.previous','Previous']"></span>
+      </mat-button-toggle>
+      <mat-button-toggle value="initial" mwlCalendarToday [(viewDate)]="viewDate">
+        <span [translate]="['general.today','Today']"></span>
+      </mat-button-toggle>
+      <mat-button-toggle mwlCalendarNextView [view]="view" [(viewDate)]="viewDate">
+        <span [translate]="['general.next','Next']"></span>
+      </mat-button-toggle>
+    </mat-button-toggle-group>
+  </div>
+</div>
+<div [ngSwitch]="view" class="margin-top">
+  <mwl-calendar-month-view *ngSwitchCase="CalendarView.Month" [viewDate]="viewDate" [events]="events"
+    [refresh]="refresh" [activeDayIsOpen]="activeDayIsOpen" (eventClicked)="handleEvent('Clicked', $event.event)"
+    (eventTimesChanged)="eventTimesChanged($event)" [excludeDays]="excludeDays"
+    (beforeViewRender)="beforeMonthViewRender($event)" (dayClicked)="selectDayClick($event.day)">
+  </mwl-calendar-month-view>
+  <mwl-calendar-week-view *ngSwitchCase="CalendarView.Week" [viewDate]="viewDate" [events]="events" [refresh]="refresh"
+    (eventClicked)="handleEvent('Clicked', $event.event)" (eventTimesChanged)="eventTimesChanged($event)"
+    [excludeDays]="excludeDays">
+  </mwl-calendar-week-view>
+  <mwl-day-view-scheduler *ngSwitchCase="CalendarView.Day" [viewDate]="viewDate" [headers]="headers"
+   [events]="events" [refresh]="refresh"></mwl-day-view-scheduler>
+  <!-- <mwl-calendar-day-view *ngSwitchCase="CalendarView.Day" [viewDate]="viewDate" [events]="events" [refresh]="refresh"
+    (eventClicked)="handleEvent('Clicked', $event.event)" (eventTimesChanged)="eventTimesChanged($event)">
+  </mwl-calendar-day-view> -->
+</div>
+<div fxLayout="row" class="margin-top" fxLayoutAlign="center center">
+  <button mat-flat-button color="primary" (click)="addEvent()">
+    <span [translate]="['general.add', 'Add']"></span>
+  </button>
+</div>
+
