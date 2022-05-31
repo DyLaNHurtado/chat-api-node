@@ -34,7 +34,6 @@ async function login(req, res, next) {
   const { email, password } = req.body;
   try {
     const user = await User.findOne({ email });
-    //Lanzo el mismo error para no dar pistas a un posible atacante
     if (!user) {
       res.status(400).send({ error: "❌ Incorrect email or password" });
     }
@@ -167,7 +166,6 @@ function uploadAvatar(req, res, next) {
           const filePath = req.files.avatar.path;
           let fileSplit = filePath.split(path.delimiter);
           if (fileSplit.length == 1) {
-            //Porque no me pilla la doble barra invertida
             fileSplit = filePath.split("\\");
           }
           let fileName = fileSplit[0];

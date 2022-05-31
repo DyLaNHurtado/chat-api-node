@@ -95,7 +95,6 @@ async function upload(req,res,next,typeMessage){
           const filePath = req.files.file.path;
           let fileSplit = filePath.split(path.delimiter);
           if (fileSplit.length == 1) {
-            //Porque no me pilla la doble barra invertida
             fileSplit = filePath.split("\\");
           }
           let fileName = fileSplit[0];

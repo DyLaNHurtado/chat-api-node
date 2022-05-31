@@ -1,6 +1,3 @@
-/**
- * Declaramos los paquetes a utilizar
- */
 const express = require("express");
 const app = express("./app");
 const server = require("http").createServer(app);
@@ -13,11 +10,6 @@ const io = require("socket.io")(server, {
   },
 });
 
-/**
- * -----------------------------------------------------
- * Socket.io conexion
- * ----------------------------------------------------
- */
 server.listen(5000, function () {
   console.log(
     `\n>> ${chalk.bold.magenta(

@@ -10,7 +10,6 @@ const options = {
 };
 
 
-
 app.use(express.urlencoded({ extended: true }));
 // --- Load Data ---
 const user_routes = require("./routes/user");
