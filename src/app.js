@@ -5,7 +5,7 @@ app.use(express.json());
 app.use(cors());
 const options = {
   cors: {
-    origin: "http://localhost:4200/** http://localhost:8888/** https://cosmos-chat.netlify.app/** http://tcp-mo1.mogenius.io:31259/**",
+    origin: "http://localhost:4200/** http://localhost:8888/** https://cosmos-chat.netlify.app/** tcp-mo1.mogenius.io:31259/**",
   },
 };
 
