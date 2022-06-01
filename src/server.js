@@ -2,8 +2,6 @@ const express = require("express");
 const app = express("./app");
 const server = require("http").createServer(app);
 const chalk = require("chalk");
-const userController = require("./controllers/user");
-const user = require("./models/user");
 const io = require("socket.io")(server, {
   cors: {
     origins: ["http://localhost:4200/**", "http://localhost:5000/**"],

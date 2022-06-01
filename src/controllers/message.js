@@ -1,6 +1,5 @@
 const Message = require("../models/message");
 const Chat = require("../models/chat");
-const { find, findById } = require("../models/message");
 const message = require("../models/message");
 
 async function getById(req, res, next) {
