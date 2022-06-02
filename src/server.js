@@ -4,7 +4,7 @@ const server = require("http").createServer(app);
 const chalk = require("chalk");
 const io = require("socket.io")(server, {
   cors: {
-    origins: ["http://localhost:4200/**", "http://localhost:5000/**","https://cosmos-chat.netlify.app/**","tcp-mo1.mogenius.io:18799/**"],
+    origins: ["http://localhost:4200/**", "http://localhost:5000/**","https://cosmos-chat.netlify.app/**","http://tcp-mo1.mogenius.io:45551/**"],
   },
 });
 
