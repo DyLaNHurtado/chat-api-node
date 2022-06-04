@@ -193,7 +193,6 @@ function uploadAvatar(req, res, next) {
   });
 }
 
-
 function getFile(req, res) {
   const { fileName } = req.params;
   const filePath = `./uploads/${fileName}`;

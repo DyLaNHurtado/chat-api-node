@@ -12,7 +12,11 @@ api.get("/user/full-data/:id", UserController.getFullUserById);
 api.put("/user/add-contact/:id", UserController.addContact);
 api.put("/user/edit-profile/:id", UserController.editProfile);
 api.put("/user/edit-settings/:id", UserController.editSettings);
-api.put("/user/upload-avatar/:id", [md_upload_file], UserController.uploadAvatar);
+api.put(
+  "/user/upload-avatar/:id",
+  [md_upload_file],
+  UserController.uploadAvatar
+);
 api.get("/user/file/:fileName", [md_upload_file], UserController.getFile);
 
 module.exports = api;

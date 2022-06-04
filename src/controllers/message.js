@@ -38,7 +38,13 @@ async function postMessage(req, res, next) {
   message.author = params.author;
   message.chat = params.chat;
   message.time = params.time;
-  if (message.text && message.author && message.chat && message.time && message.type) {
+  if (
+    message.text &&
+    message.author &&
+    message.chat &&
+    message.time &&
+    message.type
+  ) {
     try {
       const messageSaved = await message.save();
 

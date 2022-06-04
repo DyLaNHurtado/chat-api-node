@@ -66,48 +66,49 @@ async function putChat(req, res, next) {
 }
 
 function uploadVideo(req, res, next) {
-  upload(req,res,next,"video");
+  upload(req, res, next, "video");
 }
 
 function uploadAudio(req, res, next) {
-  upload(req,res,next,"audio");
+  upload(req, res, next, "audio");
 }
-
 
 function uploadImage(req, res, next) {
-  upload(req,res,next,"image");
+  upload(req, res, next, "image");
 }
 
-async function upload(req,res,next,typeMessage){
-    const params = req.params;
+async function upload(req, res, next, typeMessage) {
+  const params = req.params;
   const user = await User.findById(params.idUser);
-  if(user){
-  Chat.findById(params.idChat, async (err, chatData)  => {
-    if (err) {
-      console.log(err.toString());
-      next(err);
-    } else {
-      if (!chatData) {
-        res.status(404).send({ error: "❌ Cannot found user!" });
+  if (user) {
+    Chat.findById(params.idChat, async (err, chatData) => {
+      if (err) {
+        console.log(err.toString());
+        next(err);
       } else {
-        let chat = chatData;
-        if (req.files) {
-          const filePath = req.files.file.path;
-          let fileSplit = filePath.split(path.delimiter);
-          if (fileSplit.length == 1) {
-            fileSplit = filePath.split("\\");
-          }
-          let fileName = fileSplit[0];
-          if (fileName == "uploads") {
-            fileName = fileSplit[1];
-          }
+        if (!chatData) {
+          res.status(404).send({ error: "❌ Cannot found user!" });
+        } else {
+          let chat = chatData;
+          if (req.files) {
+            const filePath = req.files.file.path;
+            let fileSplit = filePath.split(path.delimiter);
+            if (fileSplit.length == 1) {
+              fileSplit = filePath.split("\\");
+            }
+            let fileName = fileSplit[0];
+            if (fileName == "uploads") {
+              fileName = fileSplit[1];
+            }
 
-          let newMessage = new Message();
+            let newMessage = new Message();
             newMessage.type = typeMessage;
             newMessage.url = fileName;
             newMessage.chat = chat._id;
-            newMessage.time = `${('0'+(new Date().getHours())).slice(-2)}:${('0'+(new Date().getMinutes())).slice(-2)}`;
-            newMessage.author = params.idUser
+            newMessage.time = `${("0" + new Date().getHours()).slice(-2)}:${(
+              "0" + new Date().getMinutes()
+            ).slice(-2)}`;
+            newMessage.author = params.idUser;
 
             await newMessage.save();
             chat.messages.push(newMessage._id);
@@ -121,10 +122,11 @@ async function upload(req,res,next,typeMessage){
             } else {
               res.status(200).send({ msg: `✅ ${typeMessage} uploaded!` });
             }
+          }
         }
       }
-    }
-  });}
+    });
+  }
 }
 
 module.exports = {
@@ -134,5 +136,5 @@ module.exports = {
   deleteMessageChat,
   uploadAudio,
   uploadVideo,
-  uploadImage
+  uploadImage,
 };
