@@ -2,7 +2,6 @@ const fs = require("fs");
 const path = require("path");
 const Chat = require("../models/chat");
 const User = require("../models/user");
-const Message = require("../models/message");
 const bcrypt = require("bcrypt");
 const jwt = require("../services/jwt");
 

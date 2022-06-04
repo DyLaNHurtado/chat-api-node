@@ -162,6 +162,13 @@ dist
 .history
 .ionide
 
+#SSL
+
+ssl/
+ssl/cert.pem
+ssl/key.pem
+ssl/openssl.conf
+
 # Support for Project snippet scope
 
 # End of https://www.toptal.com/developers/gitignore/api/node,visualstudiocode

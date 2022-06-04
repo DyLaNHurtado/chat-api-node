@@ -1,6 +1,10 @@
 const express = require("express");
 const app = express("./app");
-const server = require("http").createServer(app);
+const fs = require("fs");
+const server = require("https").createServer(app, {
+  key: fs.stat("../ssl/key.pem", () => {}),
+  cert: fs.stat("../ssl/cert.pem", () => {}),
+});
 const chalk = require("chalk");
 const io = require("socket.io")(server, {
   cors: {
