@@ -6,11 +6,11 @@ app.use(cors());
 
 app.use(express.urlencoded({ extended: true }));
 // --- Load Data ---
-const user_routes = require("./routes/user");
-const message_routes = require("./routes/message");
-const chat_routes = require("./routes/chat");
-const notFound = require("./middlewares/notFound");
-const handleErrors = require("./middlewares/handleErrors");
+const user_routes = require("../routes/user");
+const message_routes = require("../routes/message");
+const chat_routes = require("../routes/chat");
+const notFound = require("../middlewares/notFound");
+const handleErrors = require("../middlewares/handleErrors");
 
 // --- Base Routes ---
 app.use(process.env.API_MAINENDPOINT, user_routes);

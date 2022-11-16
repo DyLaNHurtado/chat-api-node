@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "cross-env NODE_ENV=production node ./src/index.js",
-    "dev": "cross-env NODE_ENV=development nodemon ./src/index.js",
+    "start": "cross-env NODE_ENV=production node ./src/api/index.js",
+    "dev": "cross-env NODE_ENV=development nodemon ./src/api/index.js",
     "test": "cross-env NODE_ENV=test jest --silent --maxWorkers=1 --forceExit ",
     "test:watch": "npm run test -- --watch"
   },
