@@ -1,10 +1,5 @@
 {
-    "functions": {
-    "index.js": {
-      "runtime": "@now/node@1.6.1"
-    }
-    },
     "rewrites": [{
-    "source": "/api/v1/(.*)", "destination": "index.js"
+    "source": "/api/v1/(.*)", "destination": "/api/index.js"
     }]
-    }
+}
